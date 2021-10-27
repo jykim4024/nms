@@ -1,0 +1,4 @@
+.idea
+nextor.db
+*.pyc
+__pycache__

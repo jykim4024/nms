@@ -43,7 +43,7 @@
                 <span class="text-danger small ml-2">{{ question.answer_set|length }}</span>
                 {% endif %}
             </td>
-            <td>{{ question.user.username }}</td>  <!-- 글쓴이 추가 -->
+            <td>{{ question.user.username }}</td>
             <td>{{ question.create_date|datetime }}</td>
         </tr>
         {% endfor %}
@@ -96,8 +96,15 @@
         {% endif %}
     </ul>
     <!-- 페이징처리 끝 -->
-
-    <a href="{{ url_for('question.create') }}" class="btn btn-primary">질문 등록하기</a>
+    <!-- 일부 권한에 따른 처리 시작-->
+    {% if g.user %}
+        {% if g.level %}
+        <a href="{{ url_for('question.create') }}" class="btn btn-primary">질문 등록하기(권한)</a>
+        {% else %}
+        <a href="{{ url_for('question.create') }}" class="btn btn-primary">질문 등록하기(미권한)</a>
+        {% endif %}
+    {% endif %}
+    <!-- 일부 권한에 따른 처리 끝-->
 </div>
 <form id="searchForm" method="get" action="{{ url_for('question._list') }}">
     <input type="hidden" id="kw" name="kw" value="{{ kw or '' }}">

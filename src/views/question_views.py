@@ -9,7 +9,7 @@ from ..models import Question, Answer, User, question_voter
 from ..forms import QuestionForm, AnswerForm
 from ..views.auth_views import login_required
 
-bp = Blueprint('question',__name__,url_prefix='/question')
+bp = Blueprint('question', __name__, url_prefix='/question')
 
 
 @bp.route('/list/')

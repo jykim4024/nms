@@ -25,6 +25,7 @@ def create_question(question_id):
     return render_template('comment/comment_form.html', form=form)
 
 @bp.route('/modify/question/<int:comment_id>', methods=('GET', 'POST'))
+
 @login_required
 def modify_question(comment_id):
     comment = Comment.query.get_or_404(comment_id)

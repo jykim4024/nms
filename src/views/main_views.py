@@ -1,8 +1,16 @@
-from flask import Blueprint, url_for
+from flask import Blueprint, url_for, session, g
 from werkzeug.utils import redirect
 
-bp = Blueprint('main',__name__, url_prefix='/')
+bp = Blueprint('main', __name__, url_prefix='/')
 
 @bp.route('/')
 def index():
-    return redirect(url_for('question._list'))
+    user_id = session.get('user_id')
+    if user_id is None:
+        return redirect(url_for('auth.login'))
+    else:
+        return redirect(url_for('userinfo.infolist'))
+        # return redirect(url_for('question._list'))
+
+
+

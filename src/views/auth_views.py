@@ -18,7 +18,10 @@ def signup():
         user = User.query.filter_by(username=form.username.data).first()
         if not user:
             user = User(username=form.username.data,
+                        biznum=form.biznum.data,
                         password=generate_password_hash(form.password1.data),
+                        phonenum=form.phonenum.data,
+                        rankcd=form.rankcd.data,
                         email=form.email.data)
             db.session.add(user)
             db.session.commit()
@@ -40,6 +43,7 @@ def login():
         if error is None:
             session.clear()
             session['user_id'] = user.id
+            session['level_cd'] = user.rankcd
             return redirect(url_for('main.index'))
         flash(error)
     return render_template('auth/login.html', form=form)
@@ -51,6 +55,19 @@ def load_logged_in_user():
         g.user = None
     else:
         g.user = User.query.get(user_id)
+
+@bp.before_app_request
+def user_auth():
+    user_id = session.get('user_id')
+    level_cd = session.get('level_cd')
+    if user_id is None:
+        g.auth = None
+    else:
+        g.auth = level_cd
+        if g.auth == 'MD111' or g.auth == 'MD112' or g.auth == 'MD119':
+            g.level = 'super'
+        else:
+            g.level = None
 
 @bp.route('/logout/')
 def logout():

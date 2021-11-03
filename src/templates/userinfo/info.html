@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container my-3">
+    <table class="table">
+        <thead>
+        <tr class="text-center thead-dark">
+            <th>번호</th>
+<!--            <th>user_id</th>-->
+            <th>사번</th>
+            <th>수동할당여부</th>
+            <th>할당일</th>
+            <th>등록일시</th>
+            <th>수정일시</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% if info_list %}
+        {% for info in info_list.items %}
+        <tr class="text-center">
+            <td>{{ info_list.total - ((info_list.page-1) * info_list.per_page) - loop.index0 }}</td>
+<!--            <td>{{ info.user_id }}</td>-->
+            <td>{{ info.biznum }}</td>
+            <td>{{ info.mnlyn }}</td>
+            <td>{{ info.mnl_dnum }}</td>
+            <td>{{ info.create_date }}</td>
+            <td>{{ info.modify_date }}</td>
+        </tr>
+        {% endfor %}
+        {% endif %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
+{% block script %}
+<script type='text/javascript'>
+
+</script>
+{% endblock %}
